@@ -1,6 +1,7 @@
 import './home.css';
 import Sidebar from './sidebar/sidebar';
 import PlayInfo from './playInfo/playInfo';
+import ReadComponent from './ReadComponent/ReadComponent';
 import SmallDevice from './SmallDevice/smallDevice';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -10,6 +11,9 @@ const Home = ()=>{
     const [Chapter,setChapter] = useState([]);
     const [ReciterId,setReciterId] = useState();
     const [ChapterId,setChapterId] = useState();
+    const [ToggleValue,SetToggleValue]= useState(false);
+    const [ReadChapter,setReadChapter] = useState([]);
+    const [ReadChapterName,setReadChapterName] = useState();
     const openMenu = ()=>{
         setShow(value => !value);
         if(show){ 
@@ -29,7 +33,20 @@ const Home = ()=>{
         }
         fetchRecitersData();    
         fetchChapterData(); 
-    },[])
+    },[]);
+
+    const ToggleClick = ()=>{
+        SetToggleValue(value => !value);
+    }
+    useEffect(()=>{
+        async function fetchChapterReadData(){            
+            const {data:{result}}= await axios.get(`https://quranenc.com/api/translation/sura/english_saheeh/${ChapterId}`);
+            setReadChapter(result);
+            const ChapterName = `( ${Chapter[ChapterId-1].name_arabic} ) ${Chapter[ChapterId-1].name_complex}`;
+            setReadChapterName(ChapterName);            
+        }  
+        fetchChapterReadData(); 
+    },[ChapterId]);
 
     return<>
     <div className="homeContainer">
@@ -37,16 +54,25 @@ const Home = ()=>{
             <Sidebar openMenu={openMenu} RecitersData={Reciters} ChapterData={Chapter} 
                 ReciterId={ReciterId} setReciterId={setReciterId}
                 ChapterId={ChapterId} setChapterId={setChapterId}
+                ToggleValue={ToggleValue} ToggleClick={ToggleClick}
             />
         </div>
         <div className="d-lg-none d-xl-none">
             <SmallDevice data={openMenu} />
         </div>
-        <div className="playBackShow ">        
-            <PlayInfo RecitersData={Reciters} ChapterData={Chapter}
-             ReciterId={ReciterId} ChapterId={ChapterId}
-            />
-        </div>
+        <div className="playBackShow ">
+            {
+                ToggleValue ? <>
+                <ReadComponent ReadChapter={ReadChapter} ReadChapterName={ReadChapterName}/>
+                </>
+                :
+                <>                        
+                    <PlayInfo RecitersData={Reciters} ChapterData={Chapter}
+                    ReciterId={ReciterId} ChapterId={ChapterId}
+                    />
+                </>
+            }
+        </div>        
     </div>
     </>
 }

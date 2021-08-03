@@ -1,0 +1,31 @@
+.ToggleButton{
+    height: 50px;
+    width: 100px;
+    border-radius: 50px;
+    /* border: 1px solid black; */
+    background-image: linear-gradient(aqua,skyblue);
+    position: relative;
+    cursor: pointer;
+}
+
+.ToggleCircle{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background-color: yellow;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    box-shadow: 0 0 5px black;
+    transition: all 0.3s ease;
+}
+.ReadMode> .ToggleCircle{
+    transform: translate(50px,0);
+}
+.ToggleIcon{
+    color: black;
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    font-size: 24px;
+}

@@ -1,9 +1,9 @@
+import ToggleButton from './togglebutton/togglebutton';
 
-
-const Sidebar = ({openMenu,RecitersData,ChapterData,ReciterId,setReciterId,ChapterId,setChapterId})=>{
+const Sidebar = ({openMenu,RecitersData,ChapterData,ReciterId,setReciterId,ChapterId,setChapterId,ToggleValue,ToggleClick})=>{
     
     return<>    
-    <h4 className="text-center font-weight-bold mt-5">Select Player &amp; Chapter</h4>
+    <h4 className="text-center font-weight-bold mt-5">Select {ToggleValue ? "":"Reciter &"} Chapter</h4>
     <hr className="ml-3 mr-3" />
     <div className="sidebarMenu pl-5 pr-5">
        
@@ -18,7 +18,7 @@ const Sidebar = ({openMenu,RecitersData,ChapterData,ReciterId,setReciterId,Chapt
                     }
                 </select>
             </div>
-            <div className="col-12 mt-2">
+            <div className={`col-12 mt-2 ${ToggleValue ? "BlockReciter" : "DisplayReciter"}`}>
                 <label className="font-weight-bold h6">Reciter: </label>
                 <select className="form-control" name="ReciterId" value={ReciterId} onChange={((e)=>setReciterId(e.target.value))}>
                 <option value="">--Select Reciter--</option>
@@ -27,9 +27,10 @@ const Sidebar = ({openMenu,RecitersData,ChapterData,ReciterId,setReciterId,Chapt
                     }
                 </select>
             </div>            
-            {/* <div  className="col-12 mt-2 d-lg-none d-xl-none">
-                <button className="btn btn-danger mt-2" onClick={openMenu}>set</button>
-            </div> */}
+            <div  className="col-12 mt-4 ">
+                <ToggleButton ToggleValue={ToggleValue} ToggleClick={ToggleClick}/>
+            </div>
+           
         </div>
     </div>
     </>
