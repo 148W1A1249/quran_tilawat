@@ -40,10 +40,10 @@ const PlayInfo = ({RecitersData,ChapterData,ReciterId,ChapterId})=>{
                             <span>Revelation Place :</span>
                             <span>{SingleChapter.revelation_place}</span>
                         </h6>
-                        <h6 className="d-flex justify-content-between">
+                        {/* <h6 className="d-flex justify-content-between">
                             <span>Translated Name :</span>
                             <span>{SingleChapter.translated_name.name}</span>
-                        </h6>
+                        </h6> */}
                         <div className="mt-5">
                             {/* <ReactPlayer url={audioLink(obj.Server,SingleChapter.id)}  controls={true} playing={true} width="100%" height="100%" /> */}
                             <audio controls autoPlay>
